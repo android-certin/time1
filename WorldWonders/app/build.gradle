@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.ciandt.helloworld"
+        applicationId "com.ciandt.worldwonders"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -22,5 +22,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'joda-time:joda-time:2.8.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
