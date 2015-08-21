@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.SignUpActivity;
+import com.ciandt.worldwonders.activity.SignUpActivity;
+import com.ciandt.worldwonders.activity.WorldWondersActivity;
 import com.ciandt.worldwonders.model.User;
 
 /**
@@ -41,6 +42,16 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SignUpActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
+
+        Button btnLogin = (Button)view.findViewById(R.id.btn_login);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), WorldWondersActivity.class);
+                startActivity(intent);
             }
         });
     }

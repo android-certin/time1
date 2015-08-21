@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.model.User;
 
 public class SignUpActivity extends AppCompatActivity {

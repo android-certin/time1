@@ -7,5 +7,9 @@
     <string name="login">LOGIN</string>
     <string name="signup">SIGN UP</string>
     <string name="name">Name</string>
+    <string name="title_activity_world_wonders">WorldWondersActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
