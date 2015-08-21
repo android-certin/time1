@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">World Wonders</string>
+    <string name="login">ENTRAR</string>
+    <string name="name">Nome</string>
+    <string name="password">Senha</string>
+    <string name="signup">REGISTRAR</string>
+    <string name="username">Nome do usuário</string>
+</resources>
