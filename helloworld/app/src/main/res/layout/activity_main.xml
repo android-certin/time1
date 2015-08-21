@@ -32,4 +32,18 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <fragment
+        android:id="@+id/fragment_pessoa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/button"
+        android:name="com.ciandt.helloworld.PessoaFragment"
+        tools:layout="@layout/fragment_pessoa"/>
+
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/fragment_container"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>
