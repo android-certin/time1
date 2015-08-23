@@ -9,6 +9,7 @@ import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
 
 public class WorldWondersActivity extends AppCompatActivity {
+    final int PAGE_COUNT = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +18,7 @@ public class WorldWondersActivity extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager)findViewById(R.id.pager_wonder);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(fragmentManager);
+        WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(getSupportFragmentManager(), PAGE_COUNT);
         viewPager.setAdapter(wonderFragmentAdapter);
         viewPager.setCurrentItem(0);
     }

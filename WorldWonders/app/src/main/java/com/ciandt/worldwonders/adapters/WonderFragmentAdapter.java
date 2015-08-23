@@ -10,21 +10,23 @@ import com.ciandt.worldwonders.fragments.WonderFragment;
  * Created by ffranca on 8/21/15.
  */
 public class WonderFragmentAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
+    int pageCount;
 
-    public WonderFragmentAdapter(FragmentManager fm) {
+    public WonderFragmentAdapter(FragmentManager fm, int pageCount) {
+
         super(fm);
+        this.pageCount = pageCount;
     }
 
     @Override
     public Fragment getItem(int position) {
-        WonderFragment wonderFragment =  new WonderFragment();
+        WonderFragment wonderFragment = WonderFragment.newInstance(Integer.toString(position));
 
         return wonderFragment;
     }
 
     @Override
     public int getCount() {
-        return PAGE_COUNT;
+        return this.pageCount;
     }
 }
