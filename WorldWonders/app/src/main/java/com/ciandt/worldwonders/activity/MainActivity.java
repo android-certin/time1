@@ -9,21 +9,19 @@ import android.util.Log;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.fragments.LoginFragment;
-import com.ciandt.worldwonders.fragments.HighlightFragment;
+import com.ciandt.worldwonders.fragments.WonderFragment;
 import com.ciandt.worldwonders.model.User;
 
 public class MainActivity extends AppCompatActivity{
 
     @NonNull
-    private Fragment replaceFragment(Fragment fragment, String tag) {
+    private void replaceFragment(Fragment fragment, String tag) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment, tag)
                 .commit();
-
-        return fragment;
     }
 
     @Override
@@ -31,13 +29,14 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LoginFragment loginFragment = (LoginFragment) replaceFragment(new LoginFragment(), "login");
+        LoginFragment loginFragment = new LoginFragment();
+        replaceFragment(loginFragment, "login");
 
         loginFragment.setOnLoginListener(new LoginFragment.OnLoginListener() {
 
             @Override
             public void onLogin(User user) {
-                replaceFragment(new HighlightFragment(), "wonders");
+                replaceFragment(new WonderFragment(), "wonders");
             }
         });
 

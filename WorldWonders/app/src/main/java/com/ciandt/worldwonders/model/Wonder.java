@@ -15,6 +15,20 @@ public class Wonder implements Serializable{
     private double latitude;
     private double longitude;
 
+    public Wonder() {
+
+    }
+
+    public Wonder(int id, String name, String description, String url, String photo, double latitude, double longitude) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.photo = photo;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public int getId() {
         return id;
     }

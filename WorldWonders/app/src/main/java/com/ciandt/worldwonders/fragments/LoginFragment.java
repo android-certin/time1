@@ -87,9 +87,7 @@ public class LoginFragment extends Fragment {
     }
 
     public interface OnLoginListener {
-
         void onLogin(User user);
-
     }
 
 }

@@ -3,35 +3,47 @@ package com.ciandt.worldwonders.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
+import com.ciandt.worldwonders.model.Wonder;
 
+/**
+ * Created by ffranca on 8/21/15.
+ */
 public class HighlightFragment extends Fragment {
-    final int PAGE_COUNT = 3;
+    private View view;
+    private static final String WONDER_EXTRA = "wonder";
 
+    public static final HighlightFragment newInstance(Wonder wonder) {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        HighlightFragment wonderFragment =  new HighlightFragment();
+        Bundle bundle = new Bundle(1);
+        bundle.putSerializable(WONDER_EXTRA, wonder);
+        wonderFragment.setArguments(bundle);
+        return wonderFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_world_wonders, container, false);
-
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager_wonder);
-
-        WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(getActivity().getSupportFragmentManager(), PAGE_COUNT);
-        viewPager.setAdapter(wonderFragmentAdapter);
-        viewPager.setCurrentItem(0);
-
+        view = inflater.inflate(R.layout.fragment_highlight, container, false);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        TextView textView =  (TextView)view.findViewById(R.id.textView);
+
+        Bundle arguments = getArguments();
+
+        if (arguments != null) {
+
+            Wonder wonder = (Wonder) arguments.getSerializable(WONDER_EXTRA);
+            textView.setText(String.valueOf(wonder.getId()));
+        }
     }
 }
