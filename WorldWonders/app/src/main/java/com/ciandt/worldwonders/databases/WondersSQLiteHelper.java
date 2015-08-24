@@ -10,39 +10,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class WondersSQLiteHelper extends SQLiteOpenHelper {
+/**
+ * Created by nlopes on 8/24/15.
+ */
+public class WondersSQLiteHelper  extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "wonders.db";
     private static final String DATABASE_DIRECTORY = "data/data/com.ciandt.worldwonders/databases/";
     private static final String DATABASE_PATH = DATABASE_DIRECTORY + DATABASE_NAME;
     private static final int DATABASE_VERSION = 1;
-    private static WondersSQLiteHelper instance;
-    Context context;
+    private Context context;
+    private static WondersSQLiteHelper wondersSQLiteHelper;
 
-    public static WondersSQLiteHelper getInstance(Context context) {
 
-        if(instance == null)
-            instance = new WondersSQLiteHelper(context);
+    public static WondersSQLiteHelper getInstace(Context context) {
 
-        return instance;
+        if (wondersSQLiteHelper == null) {
+            wondersSQLiteHelper = new WondersSQLiteHelper(context);
+        }
+
+        return wondersSQLiteHelper;
     }
 
+    public void configureDataBase () throws IOException {
 
-    public WondersSQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
-        configureDataBase();
-    }
+        File file = new File(DATABASE_PATH);
 
-    public void configureDataBase() {
-
-        File database = new File(DATABASE_PATH);
-        if(!database.exists()){
-            try {
-                copyDataBase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (!file.exists()) {
+            copyDataBase();
         }
     }
 
@@ -73,14 +68,19 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
 
     }
 
+
+    private WondersSQLiteHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        //roda o scrpit do banco
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         //roda o script de update
     }
-
 }

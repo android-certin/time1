@@ -11,11 +11,7 @@ import com.ciandt.worldwonders.model.Wonder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by nlopes on 8/24/15.
- */
-
-public class WonderDao implements Dao{
+public class WonderDao implements Dao<Wonder>{
 
     protected SQLiteDatabase dataBase;
     final static String TABLE_WONDERS = "wonders";
@@ -28,8 +24,9 @@ public class WonderDao implements Dao{
     private static final String COLUNA_LONGITUDE = "longitude";
 
     public WonderDao(Context context) {
-            WondersSQLiteHelper persistenceHelper = WondersSQLiteHelper.getInstance(context);
-            dataBase = persistenceHelper.getWritableDatabase();
+
+        WondersSQLiteHelper persistenceHelper = WondersSQLiteHelper.getInstace(context);
+        dataBase = persistenceHelper.getWritableDatabase();
 
     }
 
@@ -62,6 +59,7 @@ public class WonderDao implements Dao{
         double longitude = cursor.getDouble(indexLongitude);
 
        return new Wonder(id, name, description, url, photo, latitude, longitude);
+
     }
 
     private List<Wonder> createWonders(Cursor cursor) {
@@ -106,18 +104,19 @@ public class WonderDao implements Dao{
 
         List<Wonder> result = new ArrayList<Wonder>();
 
-           if (cursor.moveToFirst()) {
-                do {
-                    ContentValues contentValues = new ContentValues();
+        if (cursor.moveToFirst()) {
 
-                    DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
-                    Wonder wonder = getCurrentWonder(cursor);
+            do {
+                ContentValues contentValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
+                Wonder wonder = getCurrentWonder(cursor);
 
-                    result.add(wonder);
+                result.add(wonder);
 
-                } while (cursor.moveToNext());
-            }
-            return result;
+            } while (cursor.moveToNext());
+        }
+
+        return result;
 
     }
 
@@ -136,19 +135,23 @@ public class WonderDao implements Dao{
 
        ContentValues args = new ContentValues();
        args.put("name", wonder.getName());
-        args.put("description", wonder.getDescription());
-        args.put("url", wonder.getUrl());
-        args.put("photo",wonder.getPhoto());
-        args.put("latitude", wonder.getLatitude());
-        args.put("longitude", wonder.getLongitude());
+       args.put("description", wonder.getDescription());
+       args.put("url", wonder.getUrl());
+       args.put("photo",wonder.getPhoto());
+       args.put("latitude", wonder.getLatitude());
+       args.put("longitude", wonder.getLongitude());
 
-       return dataBase.update(TABLE_WONDERS, args, "_id " + "=" + wonder.getId(), null)
-               > 0 ? true : false;
+       int result = dataBase.update(TABLE_WONDERS, args, "_id " + "=" + wonder.getId(), null);
+
+       return result > 0 ? true : false;
+
     }
 
     @Override
     public void close() {
-        if(dataBase != null && dataBase.isOpen())
+
+        if(dataBase != null && dataBase.isOpen()){
             dataBase.close();
+        }
     }
 }
