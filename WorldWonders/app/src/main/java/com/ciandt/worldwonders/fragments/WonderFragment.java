@@ -9,18 +9,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.model.Wonder;
 
 /**
  * Created by ffranca on 8/21/15.
  */
 public class WonderFragment extends Fragment {
     private View view;
-    private static final String EXTRA_TEXT = "text";
+    private static final String WONDER_EXTRA = "wonder";
 
-    public static final WonderFragment newInstance(String text) {
+    public static final WonderFragment newInstance(Wonder wonder) {
+
         WonderFragment wonderFragment =  new WonderFragment();
         Bundle bundle = new Bundle(1);
-        bundle.putString(EXTRA_TEXT, text);
+        bundle.putSerializable(WONDER_EXTRA, wonder);
         wonderFragment.setArguments(bundle);
         return wonderFragment;
     }
@@ -39,8 +41,9 @@ public class WonderFragment extends Fragment {
         Bundle arguments = getArguments();
 
         if (arguments != null) {
-            String text = arguments.getString(EXTRA_TEXT);
-            textView.setText(text);
+
+            Wonder wonder = (Wonder) arguments.getSerializable(WONDER_EXTRA);
+            textView.setText(String.valueOf(wonder.getId()));
         }
     }
 }

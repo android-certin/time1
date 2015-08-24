@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.ciandt.worldwonders.fragments.WonderFragment;
+import com.ciandt.worldwonders.model.Wonder;
 
 /**
  * Created by ffranca on 8/21/15.
@@ -20,7 +21,11 @@ public class WonderFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        WonderFragment wonderFragment = WonderFragment.newInstance(Integer.toString(position));
+
+        Wonder wonder = new Wonder();
+        wonder.setId(position);
+
+        WonderFragment wonderFragment = WonderFragment.newInstance(wonder);
 
         return wonderFragment;
     }

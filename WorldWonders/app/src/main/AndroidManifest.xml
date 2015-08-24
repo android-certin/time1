@@ -20,12 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activity.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
-        </activity>
-        <activity
-            android:name=".activity.WorldWondersActivity"
-            android:label="@string/title_activity_world_wonders" >
         </activity>
     </application>
 
