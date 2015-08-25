@@ -35,6 +35,7 @@ public class WondersRepository {
             protected List<Wonder> doInBackground(Void... params) {
 
                 Dao<Wonder> dao = new WonderDao(context);
+
                 List<Wonder> result = dao.getAll();
                 dao.close();
 
@@ -67,7 +68,7 @@ public class WondersRepository {
                 Dao<Wonder> dao = new WonderDao(context);
                 List<Wonder> result = dao.getRandon(quantityItems);
                 dao.close();
-                
+
                 return result;
 
             }

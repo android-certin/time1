@@ -3,12 +3,13 @@ package com.ciandt.worldwonders;
 import android.app.Application;
 import android.util.Log;
 
-import com.ciandt.worldwonders.databases.WonderDao;
 import com.ciandt.worldwonders.databases.WondersSQLiteHelper;
 
 import java.io.IOException;
 
 public class WorldWonderApp extends Application{
+
+
 
     @Override
     public void onCreate() {

@@ -51,7 +51,6 @@ public class HighlightFragment extends Fragment {
             Wonder wonder = (Wonder) arguments.getSerializable(WONDER_EXTRA);
 
             String pictureFilename = wonder.getPhoto().split("\\.")[0];
-
             int pictureResource = Helpers.getRawResourceID(getContext(), pictureFilename);
 
             Picasso.with(getContext())

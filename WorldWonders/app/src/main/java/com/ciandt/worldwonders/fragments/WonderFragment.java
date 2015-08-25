@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
+import com.ciandt.worldwonders.adapters.WonderItemAdpater;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.WondersRepository;
 
@@ -19,6 +22,7 @@ import java.util.List;
 public class WonderFragment extends Fragment {
 
     final int QUANTITY_ITEMS = 3;
+    int dismissProgressDialogFlag = 2;
 
 
     @Override
@@ -34,6 +38,7 @@ public class WonderFragment extends Fragment {
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager_wonder);
 
         WondersRepository wondersRepository = new WondersRepository(getContext());
+
         final ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Wodners", "Carregando...");
 
         wondersRepository.getRandon(QUANTITY_ITEMS, new WondersRepository.WonderRandomListener() {
@@ -43,11 +48,36 @@ public class WonderFragment extends Fragment {
 
                 WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(getActivity().getSupportFragmentManager(), wonderList);
                 viewPager.setAdapter(wonderFragmentAdapter);
-                progressDialog.dismiss();
+                checkDismissDialog(progressDialog);
 
             }
         });
 
+        final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        wondersRepository.getAll(new WondersRepository.WonderAllListener() {
+
+            @Override
+            public void onWonderAll(Exception e, List<Wonder> wonderList) {
+
+                recyclerView.setAdapter(new WonderItemAdpater(getContext(), wonderList));
+                checkDismissDialog(progressDialog);
+            }
+        });
+
         return view;
+    }
+
+    private void checkDismissDialog(ProgressDialog progressDialog) {
+
+        if(dismissProgressDialogFlag < 2) {
+            progressDialog.dismiss();
+        } else {
+            dismissProgressDialogFlag --;
+        }
     }
 }
