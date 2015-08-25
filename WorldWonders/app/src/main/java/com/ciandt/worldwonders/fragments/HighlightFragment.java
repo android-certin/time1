@@ -50,21 +50,22 @@ public class HighlightFragment extends Fragment {
 
             Wonder wonder = (Wonder) arguments.getSerializable(WONDER_EXTRA);
 
-            String pictureFilename = wonder.getPhoto().split("\\.")[0];
-            int pictureResource = Helpers.getRawResourceID(getContext(), pictureFilename);
-
-            Picasso.with(getContext())
-                    .load(pictureResource)
-                    .config(Bitmap.Config.RGB_565)
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
-                    .into(imageView);
+            setImage(imageView, wonder.getPhoto().split("\\.")[0]);
 
             textView.setText(wonder.getName());
 
         }
+    }
 
+    private void setImage(ImageView imageView, String pictureFilename) {
 
+        int pictureResource = Helpers.getRawResourceID(getContext(), pictureFilename);
 
+        Picasso.with(getContext())
+                .load(pictureResource)
+                .config(Bitmap.Config.RGB_565)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(imageView);
     }
 }
