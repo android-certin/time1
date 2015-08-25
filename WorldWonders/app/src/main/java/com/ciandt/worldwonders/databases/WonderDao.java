@@ -25,7 +25,7 @@ public class WonderDao implements Dao<Wonder>{
 
     public WonderDao(Context context) {
 
-        WondersSQLiteHelper persistenceHelper = WondersSQLiteHelper.getInstace(context);
+        WondersSQLiteHelper persistenceHelper = WondersSQLiteHelper.getInstance(context);
         dataBase = persistenceHelper.getWritableDatabase();
 
     }
@@ -97,8 +97,15 @@ public class WonderDao implements Dao<Wonder>{
         }
     }
 
+
+
+
     @Override
     public List search(String query) {
+        return null;
+    }
+
+    private List<Wonder> executeQuery(String query) {
 
         Cursor cursor = dataBase.rawQuery(query, null);
 
@@ -119,7 +126,6 @@ public class WonderDao implements Dao<Wonder>{
         return result;
 
     }
-
 
     @Override
     public boolean delete(int id) {
@@ -153,5 +159,13 @@ public class WonderDao implements Dao<Wonder>{
         if(dataBase != null && dataBase.isOpen()){
             dataBase.close();
         }
+    }
+
+    @Override
+    public List<Wonder> getRandon(int quantityItems) {
+
+        List<Wonder> wonrderList = executeQuery("SELECT * FROM wonders ORDER BY RANDOM () LIMIT " + quantityItems);
+        return wonrderList;
+
     }
 }

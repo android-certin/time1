@@ -16,15 +16,14 @@ public class WorldWonderApp extends Application{
         super.onCreate();
 
         WondersSQLiteHelper wondersSQLiteHelper =
-                WondersSQLiteHelper.getInstace(getApplicationContext());
+                WondersSQLiteHelper.getInstance(getApplicationContext());
 
         try {
             wondersSQLiteHelper.configureDataBase();
         } catch (IOException e) {
-            Log.i("bError", "Erro ao configurar a conexao com o banco de dados");
+            Log.e("bError", "Erro ao configurar a conexao com o banco de dados");
         }
 
-        new WonderDao(getApplicationContext()).getAll();
     }
 
 }

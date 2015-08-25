@@ -7,31 +7,46 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.ciandt.worldwonders.fragments.HighlightFragment;
 import com.ciandt.worldwonders.model.Wonder;
 
+import java.util.List;
+
 /**
  * Created by ffranca on 8/21/15.
  */
 public class WonderFragmentAdapter extends FragmentPagerAdapter {
-    int pageCount;
 
-    public WonderFragmentAdapter(FragmentManager fm, int pageCount) {
+    private List<Wonder> wonderList;
+
+    public WonderFragmentAdapter(FragmentManager fm, List<Wonder> wonderList) {
 
         super(fm);
-        this.pageCount = pageCount;
+        this.wonderList = wonderList;
     }
 
     @Override
     public Fragment getItem(int position) {
 
-        Wonder wonder = new Wonder();
-        wonder.setId(position);
+        if (wonderList != null) {
 
-        HighlightFragment wonderFragment = HighlightFragment.newInstance(wonder);
+            Wonder wonder = wonderList.get(position);
 
-        return wonderFragment;
+            HighlightFragment wonderFragment = HighlightFragment.newInstance(wonder);
+
+            return wonderFragment;
+
+        } else {
+            return null;
+        }
+
     }
 
     @Override
     public int getCount() {
-        return this.pageCount;
+
+        if (wonderList == null) {
+            return 0;
+        } else {
+            return this.wonderList.size();
+        }
+
     }
 }

@@ -23,7 +23,7 @@ public class WondersSQLiteHelper  extends SQLiteOpenHelper {
     private static WondersSQLiteHelper wondersSQLiteHelper;
 
 
-    public static WondersSQLiteHelper getInstace(Context context) {
+    public static WondersSQLiteHelper getInstance(Context context) {
 
         if (wondersSQLiteHelper == null) {
             wondersSQLiteHelper = new WondersSQLiteHelper(context);
@@ -53,13 +53,10 @@ public class WondersSQLiteHelper  extends SQLiteOpenHelper {
         OutputStream myOutput = new FileOutputStream(new File(DATABASE_PATH));
 
         byte[] buffer = new byte[1024];
-
         int length;
 
-        while ((length = myInput.read(buffer))>0){
-
+        while ((length = myInput.read(buffer))>0) {
             myOutput.write(buffer, 0, length);
-
         }
 
         myOutput.flush();
@@ -68,11 +65,9 @@ public class WondersSQLiteHelper  extends SQLiteOpenHelper {
 
     }
 
-
     private WondersSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

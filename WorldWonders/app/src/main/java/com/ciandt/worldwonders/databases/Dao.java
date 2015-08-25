@@ -1,7 +1,5 @@
 package com.ciandt.worldwonders.databases;
 
-import com.ciandt.worldwonders.model.Wonder;
-
 import java.util.List;
 
 /**
@@ -9,11 +7,12 @@ import java.util.List;
  */
 public interface Dao<T> {
 
-    List getAll();
-    Wonder getById(int id);
-    List search(String name);
-    boolean update(T object);
-    boolean delete(int id);
-    void close();
+    public List<T> getAll();
+    public T getById(int id);
+    public List search(String name);
+    public boolean update(T object);
+    public boolean delete(int id);
+    public void close();
+    public List<T> getRandon(int quantityItems);
 
 }
