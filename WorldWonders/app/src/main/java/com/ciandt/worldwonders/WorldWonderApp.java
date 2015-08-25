@@ -7,6 +7,8 @@ import com.ciandt.worldwonders.databases.WondersSQLiteHelper;
 
 import java.io.IOException;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class WorldWonderApp extends Application{
 
 
@@ -25,6 +27,18 @@ public class WorldWonderApp extends Application{
             Log.e("bError", "Erro ao configurar a conexao com o banco de dados");
         }
 
+
+        setDefaultFont();
+
+    }
+
+    private void setDefaultFont() {
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/Roboto-Thin.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
     }
 
 }

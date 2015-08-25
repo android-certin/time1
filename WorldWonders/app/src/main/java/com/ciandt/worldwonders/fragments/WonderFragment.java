@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
@@ -64,7 +65,16 @@ public class WonderFragment extends Fragment {
             @Override
             public void onWonderAll(Exception e, List<Wonder> wonderList) {
 
-                recyclerView.setAdapter(new WonderItemAdpater(getContext(), wonderList));
+                WonderItemAdpater wonderItemAdpater = new WonderItemAdpater(getContext(), wonderList);
+                wonderItemAdpater.setOnSelectItem(new WonderItemAdpater.OnSelectItem() {
+
+                    @Override
+                    public void onSelectItem(Wonder wonder) {
+                        Toast.makeText(getContext(), wonder.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                recyclerView.setAdapter(wonderItemAdpater);
                 checkDismissDialog(progressDialog);
             }
         });

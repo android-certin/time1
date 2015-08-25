@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helpers.Helpers;
@@ -21,6 +20,7 @@ public class WonderItemAdpater extends RecyclerView.Adapter<WonderItemAdpater.Vi
 
     private List<Wonder> wonderList;
     private Context context;
+    private OnSelectItem onSelectItem;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
        
@@ -58,7 +58,7 @@ public class WonderItemAdpater extends RecyclerView.Adapter<WonderItemAdpater.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Wonder wonder = wonderList.get(position);
+        final Wonder wonder = wonderList.get(position);
         String pictureFilename = wonder.getPhoto().split("\\.")[0];
 
         final TextView textView = holder.textView;
@@ -71,7 +71,10 @@ public class WonderItemAdpater extends RecyclerView.Adapter<WonderItemAdpater.Vi
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), textView.getText(), Toast.LENGTH_SHORT).show();
+
+                if(onSelectItem != null) {
+                    onSelectItem.onSelectItem(wonder);
+                }
             }
         });
 
@@ -93,4 +96,14 @@ public class WonderItemAdpater extends RecyclerView.Adapter<WonderItemAdpater.Vi
     public int getItemCount() {
         return wonderList.size();
     }
+
+    public interface OnSelectItem {
+        void onSelectItem(Wonder wonder);
+    }
+
+    public void setOnSelectItem(OnSelectItem onSelectItem) {
+        this.onSelectItem = onSelectItem;
+    }
 }
+
+

@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.base.BaseActivity;
 import com.ciandt.worldwonders.fragments.LoginFragment;
 import com.ciandt.worldwonders.fragments.WonderFragment;
 import com.ciandt.worldwonders.model.User;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends BaseActivity {
 
     @NonNull
     private void replaceFragment(Fragment fragment, String tag) {
