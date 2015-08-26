@@ -11,5 +11,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_wonder_detail">WonderDetailActivity</string>
+    <string name="boomark">Bookmark</string>
+    <string name="directions">Directions</string>
+    <string name="share">Share</string>
 
 </resources>

@@ -22,7 +22,7 @@
     </style>
 
     <style name="AppTheme.Widget.Button" parent="Widget.AppCompat.Button">
-        <item name="android:minHeight">48dp</item>
+        <item name="android:minHeight">36dp</item>
         <item name="android:minWidth">88dp</item>
     </style>
 
@@ -33,8 +33,17 @@
         <item name="fontPath">fonts/Roboto-Medium.ttf</item>
     </style>
 
+    <style name="AppTheme.Widget.PrimaryButton" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">@color/primary_button_text_color</item>
+    </style>
+
     <style name="AppTheme.Widget.EditText" parent="Widget.AppCompat.EditText">
         <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    </style>
+
+    <style name="AppTheme.title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">10dp</item>
     </style>
 
 

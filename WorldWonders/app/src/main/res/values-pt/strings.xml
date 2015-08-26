@@ -6,4 +6,6 @@
     <string name="password">Senha</string>
     <string name="signup">REGISTRAR</string>
     <string name="username">Nome do usuário</string>
+    <string name="boomark">Bookmark</string>
+    <string name="directions">Directions</string>
 </resources>

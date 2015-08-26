@@ -14,5 +14,6 @@ public interface Dao<T> {
     public boolean delete(int id);
     public void close();
     public List<T> getRandon(int quantityItems);
+    public long insert(T Object);
 
 }

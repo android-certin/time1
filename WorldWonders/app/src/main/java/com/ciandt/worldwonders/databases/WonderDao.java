@@ -136,6 +136,13 @@ public class WonderDao implements Dao<Wonder>{
         return deleteRow > 0 ? true : false;
     }
 
+    @Override
+    public long insert(Wonder wonder) {
+
+        return 0;
+
+    }
+
    @Override
     public boolean update(Wonder wonder) {
 

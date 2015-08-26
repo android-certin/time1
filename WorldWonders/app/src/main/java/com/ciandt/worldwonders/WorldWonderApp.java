@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.ciandt.worldwonders.databases.WondersSQLiteHelper;
+import com.facebook.stetho.Stetho;
 
 import java.io.IOException;
 
@@ -29,6 +30,14 @@ public class WorldWonderApp extends Application{
 
 
         setDefaultFont();
+
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(
+                                Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                Stetho.defaultInspectorModulesProvider(this))
+                        .build());
 
     }
 

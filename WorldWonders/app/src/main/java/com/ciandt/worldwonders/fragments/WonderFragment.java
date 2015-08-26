@@ -1,6 +1,7 @@
 package com.ciandt.worldwonders.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdpater;
 import com.ciandt.worldwonders.model.Wonder;
@@ -40,7 +41,7 @@ public class WonderFragment extends Fragment {
 
         WondersRepository wondersRepository = new WondersRepository(getContext());
 
-        final ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Wodners", "Carregando...");
+        final ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Wonders", "Carregando...");
 
         wondersRepository.getRandon(QUANTITY_ITEMS, new WondersRepository.WonderRandomListener() {
 
@@ -70,7 +71,10 @@ public class WonderFragment extends Fragment {
 
                     @Override
                     public void onSelectItem(Wonder wonder) {
-                        Toast.makeText(getContext(), wonder.getName(), Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getContext(), WonderDetailActivity.class);
+                        intent.putExtra("wonder", wonder);
+                        startActivity(intent);
                     }
                 });
 
