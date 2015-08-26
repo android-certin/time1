@@ -1,6 +1,8 @@
 package com.ciandt.worldwonders.activity;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -21,6 +23,34 @@ import com.ciandt.worldwonders.repository.BookmarkRepository;
 public class WonderDetailActivity extends AppCompatActivity {
 
     private Wonder wonder;
+    private MenuItem bookmarkItem;
+
+    private void changeBookmarkIcon(Boolean isChecked) {
+
+        if (isChecked) {
+
+            bookmarkItem.setChecked(true);
+            bookmarkItem.setIcon(R.drawable.ic_bookmark_white_24dp);
+
+        } else {
+
+            bookmarkItem.setChecked(false);
+            bookmarkItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
+        }
+    }
+
+    private void checkBookmarkItem() {
+
+        BookmarkRepository bookmarkRepository = new BookmarkRepository(this);
+        bookmarkRepository.isBookmarked(wonder.getId(), new BookmarkRepository.CheckedbookmarkListener() {
+
+            @Override
+            public void onCheckedbookmark(Exception e, Boolean isChecked) {
+                changeBookmarkIcon(isChecked);
+            }
+        });
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +62,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         wonder = (Wonder)getIntent().getSerializableExtra("wonder");
+
         if (wonder != null) {
 
             TextView textView = (TextView)findViewById(R.id.text_view);
@@ -46,10 +77,28 @@ public class WonderDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setShareItemVisibility (MenuItem directions) {
+
+        try{
+
+            ApplicationInfo info = getPackageManager().getApplicationInfo("com.google.android.apps.maps", 0);
+            directions.setVisible(true);
+
+        } catch(PackageManager.NameNotFoundException e) {
+            directions.setVisible(false);
+        }
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_wonder_detail, menu);
+
+        bookmarkItem = menu.findItem(R.id.bookmark);
+        setShareItemVisibility(menu.findItem(R.id.directions));
+        checkBookmarkItem();
+
         return true;
     }
 
@@ -80,7 +129,7 @@ public class WonderDetailActivity extends AppCompatActivity {
             @Override
             public void onAddBookmark(Exception e, Long isPersist) {
 
-                Toast.makeText(getApplicationContext(), "Gravado com sucesso.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Gravado com sucesso.", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -98,6 +147,7 @@ public class WonderDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.bookmark:
 
+                changeBookmarkIcon(!item.isChecked());
                 Bookmark bookmark = new Bookmark();
                 bookmark.setIdWonder(wonder.getId());
 

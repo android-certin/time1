@@ -58,8 +58,43 @@ public class BookmarkRepository {
         return 0;
     }
 
+    @NonNull
+    public boolean isBookmarked(final int idWonder, final  CheckedbookmarkListener checkedbookmarkListener) {
+
+        AsyncTask<Void, Void, Boolean> asyncTask = new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... params) {
+
+                Dao<Bookmark> dao = new BookmarkDao(context);
+                boolean isChecked = ((BookmarkDao)dao).isChecked(idWonder);
+                dao.close();
+
+                return isChecked;
+
+            }
+
+            @Override
+            protected void onPostExecute(Boolean isChecked) {
+
+                super.onPostExecute(isChecked);
+                checkedbookmarkListener.onCheckedbookmark(null, isChecked);
+                tasks.remove(this);
+            }
+        };
+
+        tasks.add(asyncTask);
+        asyncTask.execute();
+
+        return true;
+    }
+
     public interface BookmarkListener {
         void onAddBookmark(Exception e, Long isPersist);
+    }
+
+    public interface CheckedbookmarkListener {
+        void onCheckedbookmark(Exception e, Boolean isChecked);
     }
 
     public void cancel() {
