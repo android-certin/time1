@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onLogin(User user) {
-                replaceFragment(new WonderFragment(), "wonders");
+              replaceFragment(new WonderFragment(), "wonders");
             }
         });
 

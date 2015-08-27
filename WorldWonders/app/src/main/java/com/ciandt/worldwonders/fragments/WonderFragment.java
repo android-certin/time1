@@ -1,9 +1,9 @@
 package com.ciandt.worldwonders.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +16,7 @@ import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdpater;
+import com.ciandt.worldwonders.dialog.DialogFragmentAnimation;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.WondersRepository;
 
@@ -41,7 +42,7 @@ public class WonderFragment extends Fragment {
 
         WondersRepository wondersRepository = new WondersRepository(getContext());
 
-        final ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Wonders", "Carregando...");
+        final DialogFragment dialog = DialogFragmentAnimation.show(getFragmentManager());
 
         wondersRepository.getRandon(QUANTITY_ITEMS, new WondersRepository.WonderRandomListener() {
 
@@ -50,7 +51,7 @@ public class WonderFragment extends Fragment {
 
                 WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(getActivity().getSupportFragmentManager(), wonderList);
                 viewPager.setAdapter(wonderFragmentAdapter);
-                checkDismissDialog(progressDialog);
+                checkDismissDialog(dialog);
 
             }
         });
@@ -79,17 +80,17 @@ public class WonderFragment extends Fragment {
                 });
 
                 recyclerView.setAdapter(wonderItemAdpater);
-                checkDismissDialog(progressDialog);
+                checkDismissDialog(dialog);
             }
         });
 
         return view;
     }
 
-    private void checkDismissDialog(ProgressDialog progressDialog) {
+    private void checkDismissDialog(DialogFragment dialog) {
 
         if(dismissProgressDialogFlag < 2) {
-            progressDialog.dismiss();
+           // dialog.dismiss();
         } else {
             dismissProgressDialogFlag --;
         }
