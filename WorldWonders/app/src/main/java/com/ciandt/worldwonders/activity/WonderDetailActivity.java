@@ -10,11 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.dialog.DialogWebView;
 import com.ciandt.worldwonders.helpers.ImageHelper;
 import com.ciandt.worldwonders.model.Bookmark;
 import com.ciandt.worldwonders.model.Wonder;
@@ -24,6 +27,8 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     private Wonder wonder;
     private MenuItem bookmarkItem;
+
+    private static final String WONDER_EXTRA = "wonder";
 
     private void changeBookmarkIcon(Boolean isChecked) {
 
@@ -73,6 +78,18 @@ public class WonderDetailActivity extends AppCompatActivity {
 
             ImageView imageView = (ImageView) findViewById(R.id.image);
             ImageHelper.setImage(imageView, wonder.getPhoto().split("\\.")[0], this);
+
+            TextView txLink = (TextView) findViewById(R.id.link);
+            txLink.setText(wonder.getUrl());
+            txLink.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle(1);
+                    bundle.putSerializable(WONDER_EXTRA, wonder);
+                    DialogWebView.show(getSupportFragmentManager()).setArguments(bundle);
+                }
+            });
 
         }
     }

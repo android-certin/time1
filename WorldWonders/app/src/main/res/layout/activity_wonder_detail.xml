@@ -64,6 +64,23 @@
                         android:padding="8dp"
                         android:id="@+id/text_view"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wikipedia"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="8dp"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:id="@+id/link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:textColor="@color/primary"
+                        android:paddingBottom="20dp"
+                        android:text="HTTP://Link"/>
+
                 </LinearLayout>
 
         </LinearLayout>

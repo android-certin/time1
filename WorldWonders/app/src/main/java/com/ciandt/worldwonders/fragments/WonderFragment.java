@@ -90,7 +90,7 @@ public class WonderFragment extends Fragment {
     private void checkDismissDialog(DialogFragment dialog) {
 
         if(dismissProgressDialogFlag < 2) {
-           // dialog.dismiss();
+            dialog.dismiss();
         } else {
             dismissProgressDialogFlag --;
         }
