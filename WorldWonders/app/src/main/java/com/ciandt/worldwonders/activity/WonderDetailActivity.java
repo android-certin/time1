@@ -5,20 +5,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.dialog.DialogWebView;
-import com.ciandt.worldwonders.helpers.ImageHelper;
+import com.ciandt.worldwonders.fragments.DetailFragment;
 import com.ciandt.worldwonders.model.Bookmark;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.BookmarkRepository;
@@ -62,36 +55,17 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wonder_detail);
+        
+        Bundle bundle = new Bundle(1);
+        bundle.putSerializable("wonder", (Wonder) getIntent().getSerializableExtra("wonder"));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        DetailFragment detailFragment = new DetailFragment();
+        detailFragment.setArguments(bundle);
 
-        wonder = (Wonder)getIntent().getSerializableExtra("wonder");
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container_detail, detailFragment, "itemDetail")
+                .commit();
 
-        if (wonder != null) {
-
-            TextView textView = (TextView)findViewById(R.id.text_view);
-            textView.setText(wonder.getDescription());
-
-            CollapsingToolbarLayout ctb = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            ctb.setTitle(wonder.getName());
-
-            ImageView imageView = (ImageView) findViewById(R.id.image);
-            ImageHelper.setImage(imageView, wonder.getPhoto().split("\\.")[0], this);
-
-            TextView txLink = (TextView) findViewById(R.id.link);
-            txLink.setText(wonder.getUrl());
-            txLink.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle(1);
-                    bundle.putSerializable(WONDER_EXTRA, wonder);
-                    DialogWebView.show(getSupportFragmentManager()).setArguments(bundle);
-                }
-            });
-
-        }
     }
 
     private void setShareItemVisibility (MenuItem directions) {

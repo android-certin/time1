@@ -3,16 +3,13 @@ package com.ciandt.worldwonders.dialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.model.Wonder;
@@ -47,7 +44,7 @@ public class DialogWebView extends DialogFragment {
         webview.loadUrl(wonder.getUrl());
 
         AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                .setView(view).setPositiveButton("Ta baum!", new DialogInterface.OnClickListener() {
+                .setView(view).setPositiveButton("OK!", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
