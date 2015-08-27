@@ -3,9 +3,10 @@
     android:id="@+id/selected"
     android:oneshot="false"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="100dp"
-    android:layout_width="100dp">
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
 
-    <item android:drawable="@drawable/camera_normal" android:duration="500" />
-    <item android:drawable="@drawable/camera_selected" android:duration="500" />
+    <item android:drawable="@drawable/camera_normal" android:duration="2200" />
+    <item android:drawable="@drawable/camera_selected" android:duration="200" />
+    <item android:drawable="@drawable/camera_normal" android:duration="200" />
 </animation-list>
