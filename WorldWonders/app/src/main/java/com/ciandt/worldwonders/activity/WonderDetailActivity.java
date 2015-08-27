@@ -66,6 +66,7 @@ public class WonderDetailActivity extends AppCompatActivity {
                 .replace(R.id.container_detail, detailFragment, "itemDetail")
                 .commit();
 
+
     }
 
     private void setShareItemVisibility (MenuItem directions) {

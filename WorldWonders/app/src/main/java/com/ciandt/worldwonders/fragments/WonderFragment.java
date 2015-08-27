@@ -17,6 +17,7 @@ import com.ciandt.worldwonders.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.adapters.WonderFragmentAdapter;
 import com.ciandt.worldwonders.adapters.WonderItemAdpater;
 import com.ciandt.worldwonders.dialog.DialogFragmentAnimation;
+import com.ciandt.worldwonders.helpers.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.WondersRepository;
 
@@ -33,28 +34,44 @@ public class WonderFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    private void checkIFselectFirstElement(List<Wonder> wonderList) {
+
+        if (Helpers.isTablet(getContext()) && wonderList.size() > 0) {
+            fillTabletDetailLayout(wonderList.get(0));
+        }
+    }
+
+    private void checkDisplayImageView(WondersRepository wondersRepository, final DialogFragment dialog, View view) {
+
+        if (Helpers.isTablet(getContext())) {
+            dismissProgressDialogFlag = 1;
+        } else {
+
+            final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager_wonder);
+
+            wondersRepository.getRandon(QUANTITY_ITEMS, new WondersRepository.WonderRandomListener() {
+
+                @Override
+                public void onWonderRandom(Exception e, List<Wonder> wonderList) {
+
+                    WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(getActivity().getSupportFragmentManager(), wonderList);
+                    viewPager.setAdapter(wonderFragmentAdapter);
+                    checkDismissDialog(dialog);
+
+                }
+            });
+        }
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_world_wonders, container, false);
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager_wonder);
 
         WondersRepository wondersRepository = new WondersRepository(getContext());
-
         final DialogFragment dialog = DialogFragmentAnimation.show(getFragmentManager());
-
-        wondersRepository.getRandon(QUANTITY_ITEMS, new WondersRepository.WonderRandomListener() {
-
-            @Override
-            public void onWonderRandom(Exception e, List<Wonder> wonderList) {
-
-                WonderFragmentAdapter wonderFragmentAdapter = new WonderFragmentAdapter(getActivity().getSupportFragmentManager(), wonderList);
-                viewPager.setAdapter(wonderFragmentAdapter);
-                checkDismissDialog(dialog);
-
-            }
-        });
 
         final RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -62,10 +79,14 @@ public class WonderFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        checkDisplayImageView( wondersRepository, dialog, view);
+
         wondersRepository.getAll(new WondersRepository.WonderAllListener() {
 
             @Override
             public void onWonderAll(Exception e, List<Wonder> wonderList) {
+
+                checkIFselectFirstElement(wonderList);
 
                 WonderItemAdpater wonderItemAdpater = new WonderItemAdpater(getContext(), wonderList);
                 wonderItemAdpater.setOnSelectItem(new WonderItemAdpater.OnSelectItem() {
@@ -73,9 +94,15 @@ public class WonderFragment extends Fragment {
                     @Override
                     public void onSelectItem(Wonder wonder) {
 
-                        Intent intent = new Intent(getContext(), WonderDetailActivity.class);
-                        intent.putExtra("wonder", wonder);
-                        startActivity(intent);
+                       if (Helpers.isTablet(getContext())) {
+                           fillTabletDetailLayout(wonder);
+                       } else {
+
+                           Intent intent = new Intent(getContext(), WonderDetailActivity.class);
+                           intent.putExtra("wonder", wonder);
+                           startActivity(intent);
+
+                       }
                     }
                 });
 
@@ -85,6 +112,19 @@ public class WonderFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void fillTabletDetailLayout(Wonder wonder) {
+
+        Bundle bundle = new Bundle(1);
+        bundle.putSerializable("wonder", wonder);
+
+        DetailFragment detailFragment = new DetailFragment();
+        detailFragment.setArguments(bundle);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container_detail, detailFragment, "itemDetail")
+                .commit();
     }
 
     private void checkDismissDialog(DialogFragment dialog) {
